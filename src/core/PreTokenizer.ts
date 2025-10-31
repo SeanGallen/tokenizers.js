@@ -1,0 +1,51 @@
+import { Callable } from "@utils";
+import { PreTokenizeTextOptions } from "@static/tokenizer";
+
+/**
+ * A callable class representing a pre-tokenizer used in tokenization. Subclasses
+ * should implement the `pre_tokenize_text` method to define the specific pre-tokenization logic.
+ * @extends Callable
+ */
+class PreTokenizer extends Callable<[string | string[], any?], string[]> {
+  /**
+   * Method that should be implemented by subclasses to define the specific pre-tokenization logic.
+   *
+   * @abstract
+   * @param text The text to pre-tokenize.
+   * @param options Additional options for the pre-tokenization logic.
+   * @returns The pre-tokenized text.
+   * @throws {Error} If the method is not implemented in the subclass.
+   */
+  pre_tokenize_text(text: string, options?: PreTokenizeTextOptions): string[] {
+    throw new Error("pre_tokenize_text should be implemented in subclass.");
+  }
+
+  /**
+   * Tokenizes the given text into pre-tokens.
+   * @param text The text or array of texts to pre-tokenize.
+   * @param options Additional options for the pre-tokenization logic.
+   * @returns An array of pre-tokens.
+   */
+  pre_tokenize(
+    text: string | string[],
+    options?: PreTokenizeTextOptions,
+  ): string[] {
+    return (
+      Array.isArray(text)
+        ? text.map((x) => this.pre_tokenize_text(x, options))
+        : this.pre_tokenize_text(text, options)
+    ).flat();
+  }
+
+  /**
+   * Alias for {@link PreTokenizer#pre_tokenize}.
+   * @param text The text or array of texts to pre-tokenize.
+   * @param options Additional options for the pre-tokenization logic.
+   * @returns An array of pre-tokens.
+   */
+  _call(text: string | string[], options?: any): string[] {
+    return this.pre_tokenize(text, options);
+  }
+}
+
+export default PreTokenizer;

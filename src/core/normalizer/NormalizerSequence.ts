@@ -1,0 +1,35 @@
+import Normalizer from "../Normalizer";
+import { TokenizerConfigNormalizerSequence } from "@static/tokenizer";
+import create_normalizer from "./create_normalizer";
+
+/**
+ * A Normalizer that applies a sequence of Normalizers.
+ * @extends Normalizer
+ */
+class NormalizerSequence extends Normalizer {
+  normalizers: (Normalizer | null)[];
+
+  /**
+   * Create a new instance of NormalizerSequence.
+   * @param config The configuration object.
+   */
+  constructor(config: TokenizerConfigNormalizerSequence) {
+    super(config);
+    this.normalizers = (config.normalizers ?? []).map((x) =>
+      create_normalizer(x),
+    );
+  }
+
+  /**
+   * Apply a sequence of Normalizers to the input text.
+   * @param text The text to normalize.
+   * @returns The normalized text.
+   */
+  normalize(text: string): string {
+    return this.normalizers.reduce((t, normalizer) => {
+      return normalizer ? normalizer.normalize(t) : t;
+    }, text);
+  }
+}
+
+export default NormalizerSequence;
