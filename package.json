@@ -5,10 +5,10 @@
   "main": "dist/tokenizers.cjs",
   "type": "module",
   "module": "dist/tokenizers.mjs",
-  "types": "dist/index.d.ts",
+  "types": "types/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./types/index.d.ts",
       "node": {
         "require": "./dist/tokenizers.cjs",
         "import": "./dist/tokenizers.mjs"
@@ -21,10 +21,12 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "types",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf dist types",
     "build": "npm run clean && node scripts/build.mjs",
     "dev": "npm run clean && node scripts/dev.mjs",
     "lint": "eslint src --ext .ts,.tsx",
