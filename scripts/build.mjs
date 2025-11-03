@@ -41,7 +41,7 @@ const build = async (outfile) => {
     ...minifyOptions,
   });
   reportSize(outfile);
-}
+};
 
 await build("dist/tokenizers.mjs");
 await build("dist/tokenizers.cjs");
