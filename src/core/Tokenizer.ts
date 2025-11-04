@@ -8,7 +8,7 @@ import {
   merge_arrays,
   validate_object,
 } from "@utils/core";
-import { EncodingSingle } from "@static/types";
+import { Encoding } from "@static/types";
 import type Normalizer from "./Normalizer";
 import type PreTokenizer from "./PreTokenizer";
 import type TokenizerModel from "./TokenizerModel";
@@ -140,10 +140,10 @@ class Tokenizer {
   public encode(
     text: string,
     options: EncodeOptions & { return_token_type_ids: true },
-  ): EncodingSingle & { token_type_ids: number[] };
+  ): Encoding & { token_type_ids: number[] };
 
   // Overload: when return_token_type_ids is false/null or not provided
-  public encode(text: string, options?: EncodeOptions): EncodingSingle;
+  public encode(text: string, options?: EncodeOptions): Encoding;
 
   // Implementation
   public encode(
@@ -153,14 +153,14 @@ class Tokenizer {
       add_special_tokens = true,
       return_token_type_ids = null,
     }: EncodeOptions = {},
-  ): EncodingSingle {
+  ): Encoding {
     const { tokens, token_type_ids } = this.tokenize_helper(text, {
       text_pair,
       add_special_tokens,
     });
 
     const input_ids = this.model.convert_tokens_to_ids(tokens);
-    const result: EncodingSingle = {
+    const result: Encoding = {
       ids: input_ids,
       tokens,
       attention_mask: new Array(input_ids.length).fill(1),
