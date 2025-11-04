@@ -52,6 +52,7 @@
     "rimraf": "^6.0.1",
     "terser": "^5.40.0",
     "ts-jest": "^29.4.4",
+    "tsc-alias": "^1.8.16",
     "typescript": "^5.4.0"
   },
   "repository": {
@@ -63,5 +64,8 @@
   "bugs": {
     "url": "https://github.com/huggingface/tokenizers.js/issues"
   },
-  "homepage": "https://github.com/huggingface/tokenizers.js#readme"
+  "homepage": "https://github.com/huggingface/tokenizers.js#readme",
+  "dependencies": {
+    "@huggingface/tokenizers": "^0.0.2"
+  }
 }

@@ -32,7 +32,7 @@ export type DataType =
   | "uint4"
   | "int4";
 
-export interface EncodingSingle {
+export interface Encoding {
   ids: number[];
   tokens: string[];
   attention_mask: number[];

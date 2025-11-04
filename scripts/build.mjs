@@ -5,6 +5,8 @@ import { gzipSync } from "node:zlib";
 
 console.log("Generating TypeScript declarations...");
 execSync("tsc -p tsconfig.build.json", { stdio: "inherit" });
+console.log("Resolving path aliases in declaration files...");
+execSync("tsc-alias -p tsconfig.build.json", { stdio: "inherit" });
 
 const formatSize = (bytes) => {
   if (bytes < 1024) return `${bytes}b`;
